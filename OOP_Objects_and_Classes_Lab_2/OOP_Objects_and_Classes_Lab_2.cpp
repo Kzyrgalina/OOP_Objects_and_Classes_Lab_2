@@ -110,38 +110,54 @@ void Rectangle::reset() {
 
 int main()
 {
-    {
-    // статически
-    //Rectangle p; 
-    //Rectangle p2(10, 20);
-    //Rectangle p3(p2);
+        std::cout << "--------------Static---------------------------------------------\n";
+        {
+        // статические
+            Rectangle p; 
+            Rectangle p2(10, 20);
+            Rectangle p3(p2);
+        }
 
-    // динамическое создание
-        //Rectangle *p1 = new Rectangle(1,2);
-        //Rectangle *p2 = new Rectangle(10, 20);
-        //Rectangle* p3 = new Rectangle(*p2);
+        std::cout << "--------------Dynamic---------------------------------------------\n";
 
-        //Rectangle* ep = new Parallelepiped(4, 5, 6);
+        // динамическое создание
+            Rectangle *p1 = new Rectangle(1,2);
+            Rectangle *p2 = new Rectangle(10, 20);
+            Rectangle* p3 = new Rectangle(*p2);
+
+        //методы
+            p1->reset();
+            p1->move(10, 10);
+
+            std::cout << "--------------Dynamic delete---------------------------------------------\n";
+
+            delete p1;
+            delete p2;
+            delete p3;
         
+         // std::cout << "--------------Dynamic delete---------------------------------------------\n";
 
-    //методы
-        //p1->reset();
-        //p1->move(10, 10);
-        
-    //удаляем сами, чтобы увидеть работу деструкторов
-        //delete p1;
-        //delete p2;
-        //delete p3;
-        //delete ep;
+        //удаляем сами, чтобы увидеть работу деструкторов
+            //delete p1;
+            //delete p2;
+            //delete p3;
+      
+           std::cout << "--------------Parallelepiped() ---------------------------------------------\n";
+            Parallelepiped* ep1 = new Parallelepiped();
+            Rectangle *ep2 = new Parallelepiped();
+            // 
+            delete ep1;
+            delete ep2;
+            // 
+           std::cout << "--------------ExtraRectangle() ---------------------------------------------\n";
+            // композиции
+            ExtraRectangle *er1 = new ExtraRectangle;
+            ExtraRectangle *er2 = new ExtraRectangle(*er1);
+            ExtraRectangle* er3 = new ExtraRectangle(1, 2, 3, 4);
 
-    // композиции
-        ExtraRectangle *er1 = new ExtraRectangle;
-        ExtraRectangle *er2 = new ExtraRectangle(*er1);
-        ExtraRectangle* er3 = new ExtraRectangle(1, 2, 3, 4);
+            delete(er1);
+            delete(er2);
+            delete(er3);
+    
 
-        delete(er1);
-        delete(er2);
-        delete(er3);
-    }
-    std::cout << "Hello World!\n";
 }
