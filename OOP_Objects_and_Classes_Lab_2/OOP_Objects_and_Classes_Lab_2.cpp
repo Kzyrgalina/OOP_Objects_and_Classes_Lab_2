@@ -2,95 +2,126 @@
 #include <conio.h>
 
 // создание класса
-class Point {
+class Rectangle {
 protected:
-    int x, y; // два атрибута
+    int width, length; // два атрибута
 public: 
-    Point() { // конструктор без параметров
-            std::cout << "Constr Point()\n";
-            x = 0;
-            y = 0;
+    Rectangle() { // конструктор без параметров
+            std::cout << "Constr Rectangle()\n";
+            width = 0;
+            length = 0;
     }
 
-    Point(int x, int y) { // конструктор с параметрами
-        std::cout << "Constr Point(int x, int y)\n";
-        this->x = x;
-        this->y = y;
+    Rectangle(int width, int length) { // конструктор с параметрами
+        std::cout << "Constr Rectangle(int x, int y)\n";
+        this->width = width;
+        this->length = length;
     }
-    Point(const Point &p) { // копирующий конструктор (переносит всне свойства)
-        std::cout << "Constr copy Point(const Point &p)\n";
-        x = p.x;
-        y = p.y;    
+    Rectangle(const Rectangle &p) { // копирующий конструктор (переносит всне свойства)
+        std::cout << "Constr copy Rectangle(const Rectangle &p)\n";
+        width = p.width;
+        length = p.length;    
     }
-    ~Point() {
-        //std::cout << " ~Point()\n";
-        printf("~Point(%d, %d)\n", x, y);
+    ~Rectangle() {
+        //std::cout << " ~Rectangle()\n";
+        printf("~Rectangle(%d, %d)\n", width, length);
     }
     void move(int dx, int dy) {
-        x += dx;
-        y += dy;
+        width += dx;
+        length += dy;
     }
     void reset();
 };
 
-class ExtraPoint: public Point{
+class Parallelepiped: public Rectangle{
 protected:
-    int z; 
+    int height; 
 public:
-    ExtraPoint(): Point() { // конструктор без параметров
-        std::cout << "Constr ExtraPoint()\n";
-        //x = 0;
-        //y = 0;
-        z = 0;
+    Parallelepiped(): Rectangle() { // конструктор без параметров
+        std::cout << "Constr Parallelepiped()\n";
+        //width = 0;
+        //length = 0;
+        height = 0;
     }
 
-    ExtraPoint(int x, int y, int z): Point() { // конструктор с параметрами
-        std::cout << "Constr ExtraPoint(int x, int y, int z)\n";
-        //this->x = x;
-        //this->y = y;
-        this->y = z;
+    Parallelepiped(int x, int y, int z): Rectangle() { // конструктор с параметрами
+        std::cout << "Constr Parallelepiped(int x, int y, int z)\n";
+        //this->width = width;
+        //this->length = length;
+        this->length = z;
     }
-    ExtraPoint(const ExtraPoint& p) : Point(x, y) { // копирующий конструктор (переносит всне свойства)
-        std::cout << "Constr copy ExtraPoint(const Point &p)\n";
-        x = p.x;
-        y = p.y;
-        z = p.z;
+    Parallelepiped(const Parallelepiped& p) : Rectangle(width, length) { // копирующий конструктор (переносит всне свойства)
+        std::cout << "Constr copy Parallelepiped(const Point &p)\n";
+        width = p.width;
+        length = p.length;
+        height = p.height;
     }
-    ~ExtraPoint() {
-        //std::cout << " ~Point()\n";
-        printf("~Point(%d, %d, %d)\n", x, y, z);
+    ~Parallelepiped() {
+        //std::cout << " ~Rectangle()\n";
+        printf("~Parallelepiped(%d, %d, %d)\n", width, length, height);
     }
     void move(int dx, int dy, int dz){
-        x += dx;
-        y += dy;
-        z += dz;
+        width += dx;
+        length += dy;
+        height += dz;
     }
     void reset();
     void changeZ(int newz) {
-        z = newz;
+        height = newz;
+    }
+};
+
+class ExtraRectangle {
+protected:
+    Rectangle *r1;
+    Rectangle *r2;
+
+public:
+    ExtraRectangle() { // конструктор без параметров
+        std::cout << "Constr ExtraRectangle()\n";
+        r1 = new Rectangle;
+        r2 = new Rectangle;
+    }
+
+    ExtraRectangle(int width1, int length1, int width2, int length2) { // конструктор с параметрами
+        std::cout << "Constr ExtraRectangle(int width1, int length1, int width2, int length2)\n";
+        r1 = new Rectangle(width1,length1);
+        r2 = new Rectangle(width2,length2);
+    }
+    ExtraRectangle(const ExtraRectangle& p) { // копирующий конструктор (переносит всне свойства)
+        std::cout << "Constr copy Rectangle(const ExtraRectangle &p)\n";
+        r1 = new Rectangle(*(p.r1));
+        r2 = new Rectangle(*(p.r2));
+    }
+    ~ExtraRectangle() {
+        //std::cout << " ~Rectangle()\n";
+        delete r1;
+        delete r2;
+        //printf("~ExtraRectangle(%d, %d)\n", width, length);
+        printf("~ExtraRectangle()\n");
     }
 };
 
 
-void Point::reset() {
-    x = 0;
-    y = 0;
+void Rectangle::reset() {
+    width = 0;
+    length = 0;
 }
 
 int main()
 {
     {
     // статически
-    //Point p; 
-    //Point p2(10, 20);
-    //Point p3(p2);
+    //Rectangle p; 
+    //Rectangle p2(10, 20);
+    //Rectangle p3(p2);
 
     // динамическое создание
-        //Point *p1 = new Point(1,2);
-        //Point *p2 = new Point(10, 20);
-        //Point* p3 = new Point(*p2);
+        //Rectangle *p1 = new Rectangle(1,2);
+        //Rectangle *p2 = new Rectangle(10, 20);
+        //Rectangle* p3 = new Rectangle(*p2);
 
-        ExtraPoint* ep = new ExtraPoint(1, 2, 3);
+        //Rectangle* ep = new Parallelepiped(4, 5, 6);
         
 
     //методы
@@ -101,9 +132,16 @@ int main()
         //delete p1;
         //delete p2;
         //delete p3;
-        delete ep;
-    }
-    
+        //delete ep;
 
+    // композиции
+        ExtraRectangle *er1 = new ExtraRectangle;
+        ExtraRectangle *er2 = new ExtraRectangle(*er1);
+        ExtraRectangle* er3 = new ExtraRectangle(1, 2, 3, 4);
+
+        delete(er1);
+        delete(er2);
+        delete(er3);
+    }
     std::cout << "Hello World!\n";
 }
